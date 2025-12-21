@@ -1,0 +1,82 @@
+{
+  "lesson_id": "01_paths",
+  "title": "Пути и переходы (cd/pwd/ls)",
+  "start_cwd": "/home/student",
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Где я?",
+      "prompt": "Выведи текущую директорию.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["pwd"],
+        "expected_cmd": "pwd",
+        "assert": [
+          { "type": "last_cmd_is", "value": "pwd" }
+        ]
+      },
+      "hint": "Команда: pwd",
+      "success_explain": "pwd печатает текущую рабочую директорию."
+    },
+    {
+      "id": "t2",
+      "title": "Подняться на уровень выше",
+      "prompt": "Перейди в родительскую директорию.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["cd"],
+        "expected_cmd": "cd",
+        "assert": [
+          { "type": "cwd_is", "value": "/home" }
+        ]
+      },
+      "hint": "Команда: cd ..",
+      "success_explain": "cd меняет текущую директорию. '..' означает родительскую папку."
+    },
+    {
+      "id": "t3",
+      "title": "Перейти в projects",
+      "prompt": "Перейди в директорию projects внутри домашней папки.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["cd"],
+        "expected_cmd": "cd",
+        "assert": [
+          { "type": "cwd_is", "value": "/home/student/projects" }
+        ]
+      },
+      "hint": "Можно: cd /home/student/projects или cd ~/projects (смотря где ты сейчас).",
+      "success_explain": "Цель — оказаться в /home/student/projects."
+    },
+    {
+      "id": "t4",
+      "title": "Посмотреть содержимое",
+      "prompt": "Посмотри содержимое текущей директории в длинном формате.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["ls"],
+        "expected_cmd": "ls",
+        "assert": [
+          { "type": "last_cmd_is", "value": "ls" }
+        ]
+      },
+      "hint": "Команда: ls -l",
+      "success_explain": "ls -l показывает подробный список."
+    },
+    {
+      "id": "t5",
+      "title": "Логи приложения",
+      "prompt": "Создай папку logs и файл app.log внутри неё. Можно несколькими командами.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["mkdir", "touch", "ls", "cd", "pwd"],
+        "assert": [
+          { "type": "exists_dir", "path": "./logs" },
+          { "type": "exists_file", "path": "./logs/app.log" }
+        ]
+      },
+      "hint": "Например: mkdir logs затем touch logs/app.log",
+      "success_explain": "Мы проверяем результат: появилась папка и файл в нужном месте."
+    }
+  ]
+}

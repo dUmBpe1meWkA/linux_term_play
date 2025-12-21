@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Linux Trainer</title>
+
+  <link rel="stylesheet" href="vendor/xterm/xterm.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">Linux Trainer</div>
+
+      <div class="progress">
+        <div id="progressText" class="progressText">—</div>
+        <div class="progressBar">
+          <div id="progressFill" class="progressFill"></div>
+        </div>
+      </div>
+
+      <button id="hintBtn" class="btn">Подсказка</button>
+    </header>
+
+    <main class="layout">
+      <section class="card taskCard">
+        <div class="cardTitle" id="taskTitle">Загрузка…</div>
+        <div class="cardText" id="taskPrompt">—</div>
+
+        <div class="chipRow">
+          <span class="chip" id="cwdChip">cwd: —</span>
+          <span class="chip" id="taskChip">task: —</span>
+        </div>
+
+        <div id="hintBox" class="hintBox hidden"></div>
+      </section>
+
+      <section class="card terminalCard">
+        <div class="terminalHeader">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="terminalTitle">Terminal</span>
+        </div>
+        <div id="terminal" class="terminal"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="vendor/xterm/xterm.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

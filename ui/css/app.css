@@ -1,0 +1,103 @@
+:root{
+  --bg:#0b0f19;
+  --card:#121a2a;
+  --card2:#0f1726;
+  --text:#e8eefc;
+  --muted:#a9b4d0;
+  --border:rgba(255,255,255,.08);
+  --accent:#7c5cff;
+  --good:#37d67a;
+  --bad:#ff4d6d;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background: radial-gradient(1200px 800px at 20% 10%, rgba(124,92,255,.20), transparent 40%),
+  radial-gradient(1000px 700px at 80% 20%, rgba(55,214,122,.10), transparent 45%), var(--bg); color:var(--text); }
+
+.app{ height:100%; display:flex; flex-direction:column; }
+
+.topbar{
+  height:64px; padding:0 18px;
+  display:flex; align-items:center; gap:16px;
+  border-bottom:1px solid var(--border);
+  background: linear-gradient(to bottom, rgba(18,26,42,.9), rgba(18,26,42,.55));
+  backdrop-filter: blur(10px);
+}
+
+.brand{ font-weight:700; letter-spacing:.3px; }
+.btn{
+  margin-left:auto;
+  padding:10px 14px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,.06);
+  color:var(--text);
+  border-radius:12px;
+  cursor:pointer;
+}
+.btn:hover{ background: rgba(255,255,255,.10); }
+
+.progress{ display:flex; flex-direction:column; gap:6px; min-width:260px; margin-left:auto; margin-right:8px;}
+.progressText{ font-size:12px; color:var(--muted); }
+.progressBar{ height:8px; background: rgba(255,255,255,.07); border-radius:999px; overflow:hidden; border:1px solid var(--border);}
+.progressFill{ height:100%; width:0%; background: linear-gradient(90deg, var(--accent), rgba(124,92,255,.65)); }
+
+.layout{
+  padding:18px;
+  display:grid;
+  grid-template-columns: 360px 1fr;
+  gap:16px;
+  height: calc(100% - 64px);
+}
+
+.card{
+  background: linear-gradient(180deg, rgba(18,26,42,.92), rgba(15,23,38,.85));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.35);
+  overflow:hidden;
+}
+
+.taskCard{ padding:16px; display:flex; flex-direction:column; gap:10px; }
+.cardTitle{ font-size:18px; font-weight:700; }
+.cardText{ color:var(--muted); line-height:1.35; }
+
+.chipRow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
+.chip{
+  font-size:12px; color:var(--muted);
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,.05);
+}
+
+.hintBox{
+  margin-top:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background: rgba(124,92,255,.12);
+  color: var(--text);
+  line-height:1.35;
+}
+.hidden{ display:none; }
+
+.terminalCard{ display:flex; flex-direction:column; }
+.terminalHeader{
+  height:42px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 12px;
+  border-bottom:1px solid var(--border);
+  background: rgba(255,255,255,.04);
+}
+.dot{
+  width:10px; height:10px; border-radius:50%;
+  background: rgba(255,255,255,.18);
+}
+.terminalTitle{ margin-left:8px; color:var(--muted); font-size:12px; letter-spacing:.2px; }
+.terminal{
+  flex:1;
+  padding:10px;
+}
+
