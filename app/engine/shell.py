@@ -24,30 +24,27 @@ def exec_command(*, cmd: str, args: list[str], cwd: str, home: str, vfs: VFS) ->
     if cmd == "pwd":
         if args:
             return ExecResult(False, "ERR_UNEXPECTED_ARGS", "pwd не принимает аргументы.", [], {})
-        return ExecResult(True, "OK", "OK", [cwd], {"last_cmd": "pwd"})
+        return ExecResult(True, "OK", "OK", [cwd], {"last_cmd": "pwd", "last_args": args})
 
     # ---- ls ----
     if cmd == "ls":
         flags, positionals = split_flags(args)
         if positionals:
-            return ExecResult(False, "ERR_UNEXPECTED_PATH", "В MVP ls работает без пути: просто ls или ls -l.", [], {})
+            return ExecResult(False, "ERR_UNEXPECTED_PATH",
+                              "В MVP ls работает без пути: просто ls или ls -l.", [], {})
 
-        try:
-            names = vfs.list_dir(cwd)
-        except ValueError as e:
-            return ExecResult(False, "ERR_LS", str(e), [], {"last_cmd": "ls"})
+        names = vfs.list_dir(cwd)
 
         if "-l" in flags:
             lines = []
             for n in names:
                 p = posixpath.normpath(posixpath.join(cwd, n))
-                if vfs.is_dir(p):
-                    lines.append(f"drwxr-xr-x  {n}")
-                else:
-                    lines.append(f"-rw-r--r--  {n}")
-            return ExecResult(True, "OK", "OK", lines, {})
+                lines.append(("drwxr-xr-x  " if vfs.is_dir(p) else "-rw-r--r--  ") + n)
+            return ExecResult(True, "OK", "OK", lines, {"last_cmd": "ls", "last_args": args})
         else:
-            return ExecResult(True, "OK", "OK", ["  ".join(names)] if names else [""], {})
+            return ExecResult(True, "OK", "OK",
+                              ["  ".join(names)] if names else [""],
+                              {"last_cmd": "ls", "last_args": args})
 
     # ---- cd ----
     if cmd == "cd":
@@ -63,7 +60,7 @@ def exec_command(*, cmd: str, args: list[str], cwd: str, home: str, vfs: VFS) ->
         if not vfs.is_dir(target):
             return ExecResult(False, "ERR_NOT_DIR", f"Это не директория: {target}.", [], {})
 
-        return ExecResult(True, "OK", "OK", [], {"set_cwd": target, "last_cmd": "cd"})
+        return ExecResult(True, "OK", "OK", [], {"set_cwd": target, "last_cmd": "cd", "last_args": args})
 
     # ---- mkdir ----
     if cmd == "mkdir":
@@ -77,7 +74,7 @@ def exec_command(*, cmd: str, args: list[str], cwd: str, home: str, vfs: VFS) ->
             vfs.mkdir(target)
         except ValueError:
             return ExecResult(False, "ERR_EXISTS", "Такая директория уже существует.", [], {})
-        return ExecResult(True, "OK", "OK", [], {"last_cmd": "mkdir"})
+        return ExecResult(True, "OK", "OK", [], {"last_cmd": "mkdir", "last_args": args})
 
     # ---- touch ----
     if cmd == "touch":
@@ -91,6 +88,6 @@ def exec_command(*, cmd: str, args: list[str], cwd: str, home: str, vfs: VFS) ->
             vfs.touch(target)
         except ValueError as e:
             return ExecResult(False, "ERR_TOUCH", str(e), [], {})
-        return ExecResult(True, "OK", "OK", [], {"last_cmd": "touch"})
+        return ExecResult(True, "OK", "OK", [], {"last_cmd": "touch", "last_args": args})
 
     return ExecResult(False, "ERR_UNKNOWN_CMD", f"Команда '{cmd}' пока не поддерживается.", [], {})

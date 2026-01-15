@@ -21,7 +21,36 @@
       </div>
 
       <button id="hintBtn" class="btn">Подсказка</button>
+      <button id="resetBtn" class="btn">Сброс</button>
     </header>
+    <div id="startOverlay" class="overlay">
+  <div class="overlay-card">
+    <div class="overlay-title">Linux Trainer</div>
+    <div class="overlay-row">
+  <label class="overlay-label">Урок</label>
+  <div class="lesson-dd" id="lessonDD">
+  <button class="lesson-dd__btn" id="lessonBtn" type="button">
+    <span class="lesson-dd__text" id="lessonText">Загрузка…</span>
+    <span class="lesson-dd__caret">▾</span>
+  </button>
+
+  <div class="lesson-dd__menu hidden" id="lessonMenu"></div>
+</div>
+
+
+</div>
+
+    <div class="overlay-actions">
+  <button id="btnContinue" class="btn primary">Продолжить</button>
+  <button id="btnNew" class="btn">Новая игра</button>
+</div>
+
+
+    <div class="overlay-footer">
+      <span class="muted">прогресс сохраняется автоматически</span>
+    </div>
+  </div>
+</div>
 
     <main class="layout">
       <section class="card taskCard">

@@ -1,0 +1,45 @@
+{
+  "lesson_id": "01_paths",
+  "cwd": "/home/student/projects",
+  "task_index": 4,
+  "attempts": 5,
+  "correct": 4,
+  "vfs": {
+    "name": "/",
+    "kind": "dir",
+    "children": {
+      "home": {
+        "name": "home",
+        "kind": "dir",
+        "children": {
+          "student": {
+            "name": "student",
+            "kind": "dir",
+            "children": {
+              "projects": {
+                "name": "projects",
+                "kind": "dir",
+                "children": {
+                  "logs": {
+                    "name": "logs",
+                    "kind": "dir",
+                    "children": {}
+                  }
+                }
+              },
+              "downloads": {
+                "name": "downloads",
+                "kind": "dir",
+                "children": {}
+              },
+              "readme.txt": {
+                "name": "readme.txt",
+                "kind": "file"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

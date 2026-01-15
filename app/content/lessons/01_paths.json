@@ -57,8 +57,10 @@
         "allowed_cmds": ["ls"],
         "expected_cmd": "ls",
         "assert": [
-          { "type": "last_cmd_is", "value": "ls" }
-        ]
+  { "type": "last_cmd_is", "value": "ls" },
+  { "type": "has_flag", "value": "-l" }
+]
+
       },
       "hint": "Команда: ls -l",
       "success_explain": "ls -l показывает подробный список."

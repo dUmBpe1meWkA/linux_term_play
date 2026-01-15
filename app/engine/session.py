@@ -7,6 +7,9 @@ from typing import Any
 
 from app.engine.checker import check_command
 from app.engine.lesson_loader import load_lesson_json
+import json
+import os
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
@@ -19,6 +22,31 @@ class Task:
     success_explain: str
 
 
+LESSONS_DIR = os.path.join(os.path.dirname(__file__), "..", "content", "lessons")
+
+
+def load_lesson(lesson_id: str) -> tuple[str, str, list["Task"]]:
+    path = os.path.normpath(os.path.join(LESSONS_DIR, f"{lesson_id}.json"))
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    lesson_title = data.get("title", lesson_id)
+    tasks_raw = data.get("tasks", [])
+
+    tasks: list[Task] = []
+    for t in tasks_raw:
+        tasks.append(Task(
+            id=t["id"],
+            title=t["title"],
+            prompt=t["prompt"],
+            rule=t["rule"],
+            success_explain=t.get("success_explain", ""),
+            hint=t.get("hint", "")
+        ))
+
+    return data.get("id", lesson_id), lesson_title, tasks
+
+
 class Session:
     """
     Session = состояние прохождения:
@@ -28,7 +56,12 @@ class Session:
     - данные текущего урока (из JSON)
     """
 
-    def __init__(self) -> None:
+    def __init__(self, lesson_id: str = "01_paths") -> None:
+        self.lesson_id = lesson_id
+        self.lesson_title = ""
+        self.lesson_id, self.lesson_title, self._tasks = load_lesson(lesson_id)
+        self._i = 0
+        self.last_args: list[str] = []
         self.last_cmd = ""
         self.home = "/home/student"
         self.vfs = VFS()
@@ -97,10 +130,12 @@ class Session:
             home=self.home,
             vfs=self.vfs,
         )
+        if effects and effects.get("last_args") is not None:
+            self.last_args = effects["last_args"]
 
         terminal_lines: list[str] = []
-        prompt = f"student@trainer:{self.cwd}$ "
-        terminal_lines.append(prompt + user_input)
+        # prompt = f"student@trainer:{self.cwd}$ "
+        # terminal_lines.append(prompt + user_input)
 
         code = info.get("code", "ERR")
         msg = info.get("message", "")
@@ -155,3 +190,31 @@ class Session:
             "cwd": self.cwd,
             "progress": self.progress_dict(),
         }
+
+    def to_dict(self) -> dict:
+        return {
+            "lesson_id": self.lesson_id,
+            "cwd": self.cwd,
+            "task_index": self._i,
+            "attempts": self._attempts,
+            "correct": self._correct,
+            "vfs": self.vfs.to_dict(),  # мы добавим ниже
+        }
+
+    def from_dict(self, data: dict) -> None:
+        # lesson_id пока игнорируем (у тебя пока один урок), но оставим на будущее
+        self.cwd = data.get("cwd", self.cwd)
+
+        i = int(data.get("task_index", 0))
+        if i < 0:
+            i = 0
+        if i >= len(self._tasks):
+            i = len(self._tasks) - 1
+        self._i = i
+
+        self._attempts = int(data.get("attempts", 0))
+        self._correct = int(data.get("correct", 0))
+
+        vfs_data = data.get("vfs")
+        if isinstance(vfs_data, dict):
+            self.vfs.from_dict(vfs_data)

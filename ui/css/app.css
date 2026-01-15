@@ -26,6 +26,10 @@ html,body{ height:100%; margin:0; font-family: ui-sans-serif, system-ui, -apple-
 
 .brand{ font-weight:700; letter-spacing:.3px; }
 .btn{
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.15s ease;
   margin-left:auto;
   padding:10px 14px;
   border:1px solid var(--border);
@@ -100,4 +104,278 @@ html,body{ height:100%; margin:0; font-family: ui-sans-serif, system-ui, -apple-
   flex:1;
   padding:10px;
 }
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 8, 16, 0.72);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.overlay-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.overlay-subtitle {
+  opacity: 0.75;
+  margin-bottom: 16px;
+}
+
+.overlay-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.overlay-actions .btn {
+  width: 160px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.overlay-footer {
+  margin-top: 14px;
+  opacity: 0.7;
+  font-size: 12px;
+  text-align: center;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #6aa9ff, #7f8cff);
+  color: #0b0f19;
+}
+
+.btn {
+  background: rgba(255,255,255,0.08);
+  color: #e8eefc;
+}
+
+.overlay-actions .btn.primary {
+  box-shadow: 0 6px 20px rgba(90, 140, 255, 0.35);
+}
+
+.overlay-actions .btn:not(.primary) {
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.overlay-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn.primary:hover {
+  background: linear-gradient(135deg, #7fb4ff, #9aa8ff);
+  box-shadow: 0 10px 28px rgba(90, 140, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn.primary:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 18px rgba(90, 140, 255, 0.35);
+}
+
+.btn:not(.primary):hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+}
+
+.overlay-row {
+  margin-top: 14px;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+
+.select {
+  width: 320px;
+  max-width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: #e8eefc;
+  padding: 0 10px;
+}
+
+.select {
+  width: 320px;
+  max-width: 100%;
+  height: 42px;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  color: #e8eefc;
+  padding: 0 12px;
+
+  outline: none;
+  appearance: none;          /* убираем стандартный стиль */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.select:focus {
+  border-color: rgba(120, 160, 255, 0.55);
+  box-shadow: 0 0 0 4px rgba(120, 160, 255, 0.18);
+}
+
+/* Частично работает в Chromium: делает список опций темнее */
+.select option {
+  background: #0b0f19;
+  color: #e8eefc;
+}
+
+/* disabled-опции (если будут) */
+.select option:disabled {
+  color: rgba(232,238,252,0.35);
+}
+
+.select-wrap {
+  position: relative;
+  width: 320px;
+  max-width: 100%;
+}
+
+.select-wrap .select {
+  width: 100%;
+  padding-right: 36px; /* место под caret */
+}
+
+.select-caret {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgba(232, 238, 252, 0.65);
+  font-size: 14px;
+}
+
+.lesson-dd {
+  width: 360px;
+  max-width: 100%;
+  position: relative;
+}
+
+.lesson-dd__btn {
+  width: 100%;
+  height: 44px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 0 14px;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: rgba(232, 238, 252, 0.95);
+
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.22);
+  transition: background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .15s ease;
+}
+
+.lesson-dd__btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.lesson-dd__btn:focus {
+  outline: none;
+  border-color: rgba(120, 160, 255, 0.55);
+  box-shadow: 0 0 0 4px rgba(120, 160, 255, 0.18), inset 0 0 0 1px rgba(0,0,0,0.22);
+}
+
+.lesson-dd__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.lesson-dd__caret {
+  color: rgba(232, 238, 252, 0.55);
+}
+
+/* меню */
+.lesson-dd__menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+
+  border-radius: 14px;
+  padding: 8px;
+
+  background: rgba(12, 16, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.lesson-dd__item {
+  width: 100%;
+  border-radius: 12px;
+  padding: 10px 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  cursor: pointer;
+  user-select: none;
+
+  color: rgba(232, 238, 252, 0.92);
+  background: transparent;
+  border: 1px solid transparent;
+
+  transition: background .14s ease, border-color .14s ease;
+}
+
+.lesson-dd__item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.10);
+}
+
+.lesson-dd__item--active {
+  background: rgba(120, 160, 255, 0.16);
+  border-color: rgba(120, 160, 255, 0.25);
+}
+
+.lesson-dd__badge {
+  font-size: 12px;
+  color: rgba(232, 238, 252, 0.55);
+}
+
+
+
 

@@ -124,3 +124,30 @@ class VFS:
         if n.kind != "dir" or n.children is None:
             raise ValueError("Not a directory")
         return sorted(n.children.keys())
+
+    def to_dict(self) -> dict:
+        def dump(node: Node) -> dict:
+            if node.kind == "file":
+                return {"name": node.name, "kind": node.kind}
+            return {
+                "name": node.name,
+                "kind": node.kind,
+                "children": {k: dump(v) for k, v in (node.children or {}).items()},
+            }
+
+        return dump(self.root)
+
+    def from_dict(self, data: dict) -> None:
+        def load(d: dict) -> Node:
+            kind = d.get("kind", "dir")
+            name = d.get("name", "/")
+            if kind == "file":
+                return Node(name=name, kind="file", children=None)
+
+            children_raw = d.get("children", {}) or {}
+            node = Node(name=name, kind="dir", children={})
+            for k, v in children_raw.items():
+                node.children[k] = load(v)
+            return node
+
+        self.root = load(data)

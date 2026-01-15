@@ -1,0 +1,110 @@
+{
+  "id": "02_files",
+  "title": "02 — Файлы и папки",
+  "tasks": [
+    {
+      "id": "f1",
+      "title": "Где мы сейчас?",
+      "prompt": "Выведи текущую рабочую директорию.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["pwd"],
+        "assert": [
+          { "type": "last_cmd", "cmd": "pwd" }
+        ]
+      },
+      "success_explain": "Команда pwd показывает текущую рабочую директорию.",
+      "hint": "Введи: pwd"
+    },
+
+    {
+      "id": "f2",
+      "title": "Посмотреть содержимое",
+      "prompt": "Посмотри содержимое текущей директории.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["ls"],
+        "assert": [
+          { "type": "last_cmd", "cmd": "ls" }
+        ]
+      },
+      "success_explain": "ls выводит список файлов и папок в текущей директории.",
+      "hint": "Команда: ls"
+    },
+
+    {
+      "id": "f3",
+      "title": "Подробный список",
+      "prompt": "Выведи содержимое директории в подробном формате.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["ls"],
+        "assert": [
+          { "type": "last_cmd", "cmd": "ls", "flags": ["-l"] }
+        ]
+      },
+      "success_explain": "Флаг -l заставляет ls показывать подробную информацию о файлах.",
+      "hint": "Используй: ls -l"
+    },
+
+    {
+      "id": "f4",
+      "title": "Создать папку",
+      "prompt": "Создай папку logs в текущей директории.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["mkdir"],
+        "assert": [
+          { "type": "exists_dir", "path": "logs" }
+        ]
+      },
+      "success_explain": "mkdir создаёт новую директорию.",
+      "hint": "Команда: mkdir logs"
+    },
+
+    {
+      "id": "f5",
+      "title": "Создать файл",
+      "prompt": "Создай файл app.log внутри папки logs.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["touch"],
+        "assert": [
+          { "type": "exists_file", "path": "logs/app.log" }
+        ]
+      },
+      "success_explain": "touch создаёт файл, если он не существует.",
+      "hint": "Команда: touch logs/app.log"
+    },
+
+    {
+      "id": "f6",
+      "title": "Перейти в папку",
+      "prompt": "Перейди в папку logs.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["cd"],
+        "assert": [
+          { "type": "cwd_is", "path": "/home/student/projects/logs" }
+        ]
+      },
+      "success_explain": "cd меняет текущую рабочую директорию.",
+      "hint": "Команда: cd logs"
+    },
+
+    {
+      "id": "f7",
+      "title": "Проверка результата",
+      "prompt": "Убедись, что файл app.log существует в текущей директории.",
+      "rule": {
+        "kind": "goal",
+        "allowed_cmds": ["ls"],
+        "assert": [
+          { "type": "exists_file", "path": "app.log" }
+        ]
+      },
+      "success_explain": "Если файл существует, значит мы всё сделали правильно.",
+      "hint": "Команда: ls"
+    }
+  ]
+}

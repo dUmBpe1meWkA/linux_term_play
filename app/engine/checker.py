@@ -67,7 +67,14 @@ def check_command(*, user_input: str, rule: dict[str, Any], cwd: str, home: str,
     new_cwd = effects.get("set_cwd", cwd)
     last_cmd = effects.get("last_cmd", "")
 
-    ok_goal, msg_goal = check_asserts(asserts, cwd=new_cwd, vfs=vfs, last_cmd=last_cmd)
+    ok_goal, msg_goal = check_asserts(
+        asserts,
+        cwd=new_cwd,
+        vfs=vfs,
+        last_cmd=last_cmd,
+        last_args=effects.get("last_args", []),
+    )
+
     if ok_goal:
         return _ok("Цель достигнута.", effects)
 
