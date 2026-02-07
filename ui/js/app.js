@@ -143,6 +143,7 @@ function renderLessons() {
 });
 
 
+
     lessonMenu.appendChild(item);
   }
 }

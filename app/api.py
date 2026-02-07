@@ -24,20 +24,16 @@ class AppAPI:
         }
 
     def submit_command(self, command: str) -> dict:
-        """
-        Принять команду от пользователя, проверить её, вернуть:
-        - строки для вывода в "терминал"
-        - фидбек
-        - возможно следующее задание
-        """
+        if self.session is None:
+            self.session = Session(lesson_id="01_paths")
         result = self.session.submit(command)
         write_save(self.session.lesson_id, self.session.to_dict())
         return result
 
     def get_hint(self) -> dict:
-        """Вернуть подсказку по текущему заданию."""
-        hint = self.session.hint()
-        return {"hint": hint}
+        if self.session is None:
+            self.session = Session(lesson_id="01_paths")
+        return {"hint": self.session.hint()}
 
     def reset_progress(self, lesson_id: str = "01_paths") -> dict:
         delete_save(lesson_id)
